@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/colorPrimary"
+    tools:context=".Add">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_baseline_person_24_white"
+        android:layout_marginTop="150dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/person_imageView"
+        />
+
+    <EditText
+        android:id="@+id/al_nome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/person_imageView"
+        android:hint="Nome"
+        android:textColor="@color/colorWhite"
+        android:textSize="28sp" />
+
+    <EditText
+        android:id="@+id/al_numero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/al_nome"
+        android:hint="(00) 90000-0000"
+        android:textColor="@color/colorWhite"
+        android:textSize="28sp"
+        android:inputType="number"/>
+
+    <EditText
+        android:id="@+id/al_idade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/al_numero"
+        android:hint="__/__/__"
+        android:textColor="@color/colorWhite"
+        android:textSize="28sp"
+        android:inputType="number"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_alterar_confirmar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="25dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="visible"
+            app:backgroundTintMode="add"
+            app:fabCustomSize="80dp"
+            app:fabSize="normal"
+            app:rippleColor="@color/colorWhite"
+            app:srcCompat="@drawable/ic_baseline_check_24"
+            tools:ignore="VectorDrawableCompat" />
+
+    </FrameLayout>
+
+
+</RelativeLayout>

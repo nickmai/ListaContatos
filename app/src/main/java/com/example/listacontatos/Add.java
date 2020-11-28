@@ -19,6 +19,8 @@ public class Add extends AppCompatActivity {
     EditText ed_idade;
 
     FloatingActionButton fab;
+
+    RoomDB database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

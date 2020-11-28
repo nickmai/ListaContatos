@@ -58,15 +58,29 @@ public class MainActivity extends AppCompatActivity {
 
     boolean desc = false;
 
+    RoomDB database;
+    private MyAdapter adapter;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        database = RoomDB.getInstance(this);
+        contatos = database.mainDao().getAll();
+
         fab = findViewById(R.id.fab_add);
 
         listView = findViewById(R.id.listView);
+        adapter = new MyAdapter(MainActivity.this, contatos);
+
+        contatos.clear();
+        contatos.addAll(database.mainDao().getAll());
+
+        listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -93,10 +107,18 @@ public class MainActivity extends AppCompatActivity {
 
                         if (item.getTitle().equals("Deletar")) {
 
-                            contatos.remove(pos);
+                            //contatos.remove(pos);
+                            //database.mainDao().reset(contatos);
+                            ;
+                            database.mainDao().delete(database.mainDao().getAll().get(pos));
 
-                            MyAdapter adapter = new MyAdapter(MainActivity.this, contatos);
+                            contatos.clear();
+                            contatos.addAll(database.mainDao().getAll());
+
+//                    MyAdapter adapter = new MyAdapter(this, contatos);
                             listView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+
 
                         } else if (item.getTitle().equals("Editar")) {
                             Intent intent = new Intent(getApplicationContext(), Alterar.class);
@@ -148,10 +170,16 @@ public class MainActivity extends AppCompatActivity {
 
                         if (item.getTitle().equals("Deletar")) {
 
-                            contatos.remove(position);
+                            //contatos.remove(position);
+                            //database.mainDao().reset(contatos);
+                            database.mainDao().delete(database.mainDao().getAll().get(position));
 
-                            MyAdapter adapter = new MyAdapter(MainActivity.this, contatos);
+                            contatos.clear();
+                            contatos.addAll(database.mainDao().getAll());
+
+//                    MyAdapter adapter = new MyAdapter(this, contatos);
                             listView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
 
                         } else if (item.getTitle().equals("Editar")) {
                             Intent intent = new Intent(getApplicationContext(), Alterar.class);
@@ -203,10 +231,21 @@ public class MainActivity extends AppCompatActivity {
 
 
                 if (aNome != null) {
-                    contatos.add(new Contato(aNome, aIdade, aNumero));
+                   // contatos.add(new Contato(aNome, aIdade, aNumero));
 
-                    MyAdapter adapter = new MyAdapter(this,  contatos);
+                    database.mainDao().insert(new Contato(aNome, aIdade, aNumero));
+
+                    contatos.clear();
+                    contatos.addAll(database.mainDao().getAll());
+
+//                    MyAdapter adapter = new MyAdapter(this, contatos);
                     listView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+
+                    Log.d("RoomDB","database ==="+ database.mainDao().getAll()+"::::");
+                    Log.d("RoomDB","database ==="+ database.mainDao().getAll().size()+"::::");
+                    Log.d("rContato tamanho","Contatos tamanho"+ contatos.size()+"::::");
+
                 }
             }
             if (resultCode == Activity.RESULT_CANCELED) {
@@ -221,10 +260,17 @@ public class MainActivity extends AppCompatActivity {
                 int aPos = intent.getIntExtra("position", -1);
                 if (aNome != null) {
 
-                    contatos.set(aPos, new Contato(aNome, aIdade, aNumero));
+//                    contatos.set(aPos, new Contato(aNome, aIdade, aNumero));
 
-                    MyAdapter adapter = new MyAdapter(this, contatos);
+                    database.mainDao().update(database.mainDao().getAll().get(aPos).getID(), aNome, aIdade, aNumero);
+
+
+                    contatos.clear();
+                    contatos.addAll(database.mainDao().getAll());
+
+//                    MyAdapter adapter = new MyAdapter(this, contatos);
                     listView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
 
                 }
             }
@@ -275,13 +321,13 @@ public class MainActivity extends AppCompatActivity {
         Context context;
         List<Contato> rContato;
 
+        //RoomDB aDatabase;
 
         MyAdapter(Context c, List<Contato> contatoList) {
             super(c, R.layout.lista, R.id.textView1, contatoList);
             this.context = c;
-
             this.rContato = contatoList;
-
+            notifyDataSetChanged();
         }
 
 
@@ -291,6 +337,8 @@ public class MainActivity extends AppCompatActivity {
             LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View lista = layoutInflater.inflate(R.layout.lista, parent, false);
+
+            //aDatabase = RoomDB.getInstance(context);
 
             ImageView images = lista.findViewById(R.id.image);
             TextView myName = lista.findViewById(R.id.textView1);
@@ -302,7 +350,12 @@ public class MainActivity extends AppCompatActivity {
             myAge.setText(String.valueOf(rContato.get(position).getIdade()));
 
 
+            Log.d("RoomDB","database ==="+ database.mainDao().getAll()+"::::");
+            Log.d("RoomDB","database ==="+ database.mainDao().getAll().size()+"::::");
+            Log.d("rContato tamanho","Contatos tamanho"+ rContato.size()+"::::");
+
             return lista;
         }
+
     }
 }

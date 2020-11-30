@@ -2,15 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.listacontatos">
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Contatos"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Alterar"></activity>
+        <activity android:name=".AvatarActivity"></activity>
+        <activity android:name=".Alterar" />
         <activity android:name=".Add" />
         <activity
             android:name=".OutraActivity"

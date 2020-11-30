@@ -1,5 +1,8 @@
 package com.example.listacontatos;
 
+import android.graphics.Bitmap;
+import android.widget.ImageView;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -20,6 +23,9 @@ public class Contato implements Serializable{
 
     @ColumnInfo(name = "numero")
     private String numero;
+
+    @ColumnInfo(name = "imagem")
+    private String imagem;
 
     public Contato(String nome, int idade, String numero) {
         this.nome = nome;
@@ -58,6 +64,14 @@ public class Contato implements Serializable{
 
     public void setNumero(String numero) {
         this.numero = numero;
+    }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 
     @Override

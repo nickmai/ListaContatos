@@ -12,5 +12,8 @@
     <item
         android:id="@+id/mediaItem"
         android:title="Media" />
+    <item
+        android:id="@+id/avatarItem"
+        android:title="Mudar avatar" />
 
 </menu>
